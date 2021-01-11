@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SunopsisExport>
+<Admin RepositoryVersion="05.02.02.05" IsLegacyIdCompatible="false" />
+<Encryption algorithm="AES" keyLength="128" exportKeyHash="" keyVect="JoccxLNdVo16rXWzn/EJhw==" exportKeySalt="4dc38b21-47b4-463d-9a4f-70fc287d537e" containsCipherText="false"/>
+<Object class="com.sunopsis.dwg.dbobj.SnpVar">
+		<Field name="DefDate" type="java.sql.Timestamp">null</Field>
+	<Field name="DefN" type="com.sunopsis.sql.DbInt">null</Field>
+	<Field name="DefV" type="java.lang.String">null</Field>
+	<Field name="ExtVersion" type="java.lang.String">null</Field>
+	<Field name="FirstDate" type="java.sql.Timestamp"><![CDATA[2020-07-10 20:24:08.0]]></Field>
+	<Field name="FirstUser" type="java.lang.String"><![CDATA[SUPERVISOR]]></Field>
+	<Field name="GlobalId" type="java.lang.String"><![CDATA[c2aee812-cbb1-4ab4-be2d-ae4d7f9d3c86]]></Field>
+	<Field name="IndChange" type="java.lang.String"><![CDATA[I]]></Field>
+	<Field name="IndStore" type="java.lang.String"><![CDATA[L]]></Field>
+	<Field name="IntVersion" type="com.sunopsis.sql.DbInt"><![CDATA[1]]></Field>
+	<Field name="IProject" type="com.sunopsis.sql.DbInt"><![CDATA[6]]></Field>
+	<Field name="ITxtVar" type="com.sunopsis.sql.DbInt"><![CDATA[null]]></Field>
+	<Field name="ITxtVarIn" type="com.sunopsis.sql.DbInt"><![CDATA[4602]]></Field>
+	<Field name="ITxtVarValTxt" type="com.sunopsis.sql.DbInt"><![CDATA[null]]></Field>
+	<Field name="IVar" type="com.sunopsis.sql.DbInt"><![CDATA[87]]></Field>
+	<Field name="LastDate" type="java.sql.Timestamp"><![CDATA[2020-07-10 20:24:08.0]]></Field>
+	<Field name="LastUser" type="java.lang.String"><![CDATA[SUPERVISOR]]></Field>
+	<Field name="LschemaName" type="java.lang.String"><![CDATA[INFA2Paas_OBIEJE_SFDC_LS]]></Field>
+	<Field name="VarDatatype" type="java.lang.String"><![CDATA[A]]></Field>
+	<Field name="VarName" type="java.lang.String"><![CDATA[LV_OBIE_SFDC_GET_CNT]]></Field>
+	<Field name="VarType" type="java.lang.String"><![CDATA[P]]></Field>
+	<Field name="VLastDate" type="java.sql.Timestamp">null</Field>
+</Object>
+<Object class="com.sunopsis.dwg.dbobj.SnpTxtHeader">
+		<Field name="Enc" type="java.lang.String">null</Field>
+	<Field name="EncKey" type="java.lang.String">null</Field>
+ <Field name="EncKeyVect" type="java.lang.String">null</Field>
+	<Field name="GlobalId" type="java.lang.String"><![CDATA[ed74ad7a-b067-47ed-b9dd-70ad416e52f6]]></Field>
+	<Field name="ITxt" type="com.sunopsis.sql.DbInt"><![CDATA[4602]]></Field>
+	<Field name="ITxtOrig" type="com.sunopsis.sql.DbInt"><![CDATA[128]]></Field>
+	<Field name="SqlIndGrp" type="java.lang.String"><![CDATA[2]]></Field>
+ <Field name="Txt" type="java.lang.String"><![CDATA[SELECT COUNT(1) FROM ( SELECT 
+    --
+   T757366.X_MOT_ACCOUNT_CLASS account_class,
+    T777852.PER_NAME_MONTH,
+   --
+    NVL(
+        CASE
+            WHEN T750045.ACCOUNT_SEG1_CODE IS NULL
+            THEN T854409.ACCOUNT_SEG1_CODE
+            ELSE T750045.ACCOUNT_SEG1_CODE
+        END,
+        CASE
+           WHEN T854409.ACCOUNT_SEG1_CODE IS NULL
+           THEN T750045.ACCOUNT_SEG1_CODE
+           ELSE T854409.ACCOUNT_SEG1_CODE
+        END
+    ) AS gl_legal_entity,
+    --
+    CASE
+        WHEN T750045.ACCOUNT_SEG2_CODE IS NULL
+        THEN T854409.ACCOUNT_SEG2_CODE
+        ELSE T750045.ACCOUNT_SEG2_CODE
+    END AS gl_business,
+    --
+    NVL (
+        CASE
+            WHEN T750045.ACCOUNT_SEG3_CODE IS NULL
+            THEN
+                CASE
+                    WHEN T757366.X_MOT_ACCOUNT_CLASS IN ('DNAREPT', 'DNARSRV')
+                    THEN '410000'
+                    ELSE '400000'
+               END
+            ELSE T750045.ACCOUNT_SEG3_CODE
+        END,
+        '400000'
+    ) AS gl_account_number,
+    --
+    CASE
+        WHEN T750045.ACCOUNT_SEG4_CODE IS NULL
+        THEN T854409.ACCOUNT_SEG4_CODE
+        ELSE T750045.ACCOUNT_SEG4_CODE
+    END AS gl_department,
+    --
+    CASE
+        WHEN T750045.ACCOUNT_SEG5_CODE IS NULL
+        THEN T854409.ACCOUNT_SEG5_CODE
+        ELSE T750045.ACCOUNT_SEG5_CODE
+    END AS gl_type_of_sale,
+    --
+    CASE
+        WHEN T750045.ACCOUNT_SEG6_CODE IS NULL
+        THEN T854409.ACCOUNT_SEG6_CODE
+        ELSE T750045.ACCOUNT_SEG6_CODE
+    END AS gl_country_code,
+    --
+    NVL (
+        CASE
+            WHEN T750045.ACCOUNT_SEG7_CODE IS NULL
+            THEN T854409.ACCOUNT_SEG7_CODE
+            ELSE T750045.ACCOUNT_SEG7_CODE
+        END,
+        CASE
+            WHEN T854409.ACCOUNT_SEG7_CODE IS NULL
+            THEN T750045.ACCOUNT_SEG7_CODE
+            ELSE T854409.ACCOUNT_SEG7_CODE
+        END
+    ) AS gl_apc_code,
+     --
+    SUM (
+            CASE
+               WHEN T757366.X_MOT_ACCOUNT_CLASS IN ('ADJ', 'ADJUST')
+               THEN T757366.REVENUE_LOC_AMT
+               ELSE T757366.X_MOT_REV_EXT_AMT
+            END
+            * OBAV7_R11_DW.wc_common_pkg.exchange_rate (T777852.ENT_PERIOD_END_DT,
+                             T757366.LOC_CURR_CODE,
+                             'USD'))
+            AS amount_usd,
+     --
+         SUM (
+            CASE
+               WHEN T757366.DATASOURCE_NUM_ID IN (51, 52)
+               THEN
+                  CASE
+                     WHEN T757366.X_MOT_ACCOUNT_CLASS = 'XLA MANUAL'
+                     THEN
+                        CASE
+                           WHEN T757366.DB_CR_IND = 'DR'
+                           THEN NVL (T757366.XACT_QTY, 0) * -1
+                           ELSE NVL (T757366.XACT_QTY, 0)
+                        END
+                     ELSE
+                        NVL (T757366.XACT_QTY, 0)
+                  END
+               ELSE
+                  CASE
+                     WHEN T750045.ACCOUNT_SEG3_CODE <> '420000'
+                          AND T750045.RECON_TYPE_CODE = 'R'
+                          AND T757366.X_MOT_ACCOUNT_CLASS = 'XLA MANUAL'
+                     THEN NVL (T757366.XACT_QTY, 0) * -1
+                     ELSE NVL (T757366.XACT_QTY, 0)
+                  END
+            END)
+            AS quantity,
+    --
+    NVL (T734763.NAME, 'ALL_OTHER_CUSTOMERS') AS customer_name,
+    NUllIF( (NVL (T734763.ACCOUNT_NUM, 'ALL_OTHER_CUSTOMERS')), NVL (T734763.NAME, 'ALL_OTHER_CUSTOMERS') ) AS customer_number,
+    --
+        T1139625.PROD_HIER_APC_CODE AS product_hierarchy_apc,
+        T1139625.PROD_LINE  AS product_hierarchy_line,
+        T1139625.PROD_FAMILY AS product_hierarchy_family,
+        T1139625.PROD_TECHNOLOGY AS product_hierarchy_technology,
+         T1139625.PROD_HIER_SBU AS product_hierarchy_sbu
+    --
+    ,NVL (
+        CASE
+            WHEN T750045.ACCOUNT_SEG7_CODE IS NULL
+            THEN T854409.ACCOUNT_SEG7_CODE
+            ELSE T750045.ACCOUNT_SEG7_CODE
+        END,
+        CASE
+            WHEN T854409.ACCOUNT_SEG7_CODE IS NULL
+            THEN T750045.ACCOUNT_SEG7_CODE
+            ELSE T854409.ACCOUNT_SEG7_CODE
+        END
+    ) ||'-'||NVL (T734763.ACCOUNT_NUM, 'ALL_OTHER_CUSTOMERS') ||'-'|| T757366.x_arrs_dna_period "ORDER_CODE"  
+     --
+   --,TO_CHAR(LAST_DAY(TO_DATE(T777852.PER_NAME_MONTH||'/01','yyyy/mm/dd')), 'yyyy-mm-dd') LAST_MONTH_DAY
+    ,TO_CHAR(T777852.ENT_PERIOD_END_DT, 'yyyy-mm-dd') AS LAST_MONTH_DAY  /* JD:  Leverage period end date already captured in W_DAY_D dimension table */
+  --
+    , 'USD' "AMOUNT_UNIT_TYPE", 'Revenue JE' "TYPE", 'OBIE' "SOURCE"
+--   , 'a5ca0000000e6UF' "LOAD_FILE" --Load file record id
+,'SF_OBIE_Informatica_Integration' as C_NAME__C
+   FROM
+    --
+    OBAV7_R11_DW.W_PARTY_D T733415             /* Dim_W_PARTY_D_Price_List_Customer */
+    ,OBAV7_R11_DW.W_CUSTOMER_ACCOUNT_D T734763           /* Dim_W_CUSTOMER_ACCOUNT_D */
+    ,OBAV7_R11_DW.W_GL_ACCOUNT_D T750045 /* Dim_W_GL_ACCOUNT_D_Secondary_XLA_Sub_Ledger_Accounting */
+    ,OBAV7_R11_DW.W_GL_REVN_F T757366                            /* Fact_W_GL_REVN_F */
+    ,OBAV7_R11_DW.W_DAY_D T777852                              /* Dim_W_DAY_D_Common */
+    ,OBAV7_R11_DW.W_PRODUCT_D T778402                             /* Dim_W_PRODUCT_D */
+    ,OBAV7_R11_DW.W_GL_ACCOUNT_D T854409     /* Dim_W_GL_ACCOUNT_D_Cr_Sec_GL Account */
+    ,OBAV7_R11_DW.WC_APC_DH T1139625                                /* Dim_WC_APC_DH */
+    --
+WHERE 1 = 1
+    AND T733415.INTEGRATION_ID = T734763.PARTY_ID
+    AND T733415.DATASOURCE_NUM_ID = T734763.DATASOURCE_NUM_ID
+    AND T734763.ROW_WID = T757366.CUSTOMER_ACCNT_WID
+   AND T750045.ROW_WID = T757366.X_MOT_XLA_SEC_GL_ACCOUNT_WID
+    AND T757366.DELETE_FLG = 'N'
+    AND T757366.X_MOT_ACCOUNT_CLASS IN ('GLADJ','DNAREPT','DNARSRV', 'EDISC')
+    -- AND T777852.PER_NAME_MONTH = SUBSTR(T757366.X_ARRS_DNA_PERIOD,1,4) || ' / ' || SUBSTR(T757366.X_ARRS_DNA_PERIOD,5,2)
+    AND T777852.ROW_WID = T757366.POSTED_ON_DT_WID  /* JD:  Leverage period end date already captured in W_DAY_D dimension table */
+   -- AND T757366.x_arrs_dna_period = (201508) --Previous month
+   AND T757366.x_arrs_dna_period = (select 
+case when to_number(to_char(sysdate, 'MM')) = '01' then to_number((select to_number(to_char(sysdate, 'YYYY'))-1||'12' from dual))
+else to_number(to_char(sysdate, 'YYYYMM'))-1 end from dual) --Previous month
+--
+    AND NVL(T757366.X_MOT_REV_EXT_AMT,0) <> 0
+    --
+    AND NVL (
+         CASE
+            WHEN T750045.ACCOUNT_SEG3_CODE IS NULL
+            THEN
+               CASE
+                  WHEN T757366.X_MOT_ACCOUNT_CLASS IN ('DNAREPT', 'DNARSRV')
+                  THEN '410000'
+                  ELSE '400000'
+               END
+            ELSE T750045.ACCOUNT_SEG3_CODE
+         END,
+         '400000') LIKE '4%'
+    --
+    AND T757366.PRODUCT_WID = T778402.ROW_WID
+    AND T757366.POSTED_ON_DT_WID = T777852.ROW_WID
+    AND T757366.X_MOT_SEC_COGS_GL_ACCOUNT_WID = T854409.ROW_WID
+    AND T757366.X_ARRS_REV_APC_WID = T1139625.ROW_WID
+    AND 
+           NVL (
+        CASE
+            WHEN T750045.ACCOUNT_SEG7_CODE IS NULL
+            THEN T854409.ACCOUNT_SEG7_CODE
+            ELSE T750045.ACCOUNT_SEG7_CODE
+        END,
+        CASE
+            WHEN T854409.ACCOUNT_SEG7_CODE IS NULL
+            THEN T750045.ACCOUNT_SEG7_CODE
+            ELSE T854409.ACCOUNT_SEG7_CODE
+        END
+    ) not in ('HT01', 'H185', 'H001', 'H950', 'H951', 'HCOM', 'HGPS', 'HNET', 'HWA3', --Corporate
+'LFRE', 'KFRE', 'AFRE', 'EFRE', '4FRE', 'WFRE', 'SFRE', 'BFRE', 'IFRE') --Freight
+--
+--  AND
+--     NVL (
+--        CASE
+--            WHEN T750045.ACCOUNT_SEG7_CODE IS NULL
+--            THEN T854409.ACCOUNT_SEG7_CODE
+--            ELSE T750045.ACCOUNT_SEG7_CODE
+--        END,
+--        CASE
+--            WHEN T854409.ACCOUNT_SEG7_CODE IS NULL
+--            THEN T750045.ACCOUNT_SEG7_CODE
+--            ELSE T854409.ACCOUNT_SEG7_CODE
+--        END
+--    ) NOT IN (select attribute2
+--    FROM OBAV7_R11_DW.WC_FND_LOOKUPS_V_G
+-- where lookup_type = 'C_FND_SALES_COMM_APC_CFG'
+-- AND LANGUAGE='US'
+-- AND enabled_flag = 'Y'
+-- AND SYSDATE BETWEEN NVL (start_date_active, SYSDATE) AND NVL (end_date_active, SYSDATE + 1)
+-- AND attribute1 IN ('BOOKED',  'ACTIVE' ))
+--
+AND NOT EXISTS (
+        SELECT 1
+          FROM OBAV7_R11_DW.WC_FND_LOOKUPS_V_G X
+         WHERE X.LOOKUP_TYPE = 'C_FND_SALES_COMM_APC_CFG'
+           AND X.LANGUAGE = 'US'
+           AND X.ENABLED_FLAG = 'Y'
+           AND SYSDATE BETWEEN NVL(X.START_DATE_ACTIVE, SYSDATE)
+                           AND NVL(X.END_DATE_ACTIVE, SYSDATE + 1)
+           AND X.ATTRIBUTE1 IN ('BOOKED','ACTIVE')
+           AND X.ATTRIBUTE2 = NVL(
+                   CASE
+                        WHEN T750045.ACCOUNT_SEG7_CODE IS NULL
+                        THEN T854409.ACCOUNT_SEG7_CODE
+                        ELSE T750045.ACCOUNT_SEG7_CODE
+                    END,
+                    CASE
+                        WHEN T854409.ACCOUNT_SEG7_CODE IS NULL
+                        THEN T750045.ACCOUNT_SEG7_CODE
+                        ELSE T854409.ACCOUNT_SEG7_CODE
+                    END
+        ))
+
+
+-- AND NUllIF( (NVL (T734763.ACCOUNT_NUM, 'ALL_OTHER_CUSTOMERS')), NVL (T734763.NAME, 'ALL_OTHER_CUSTOMERS') ) IS NOT NUll 
+      --
+GROUP BY
+    --
+    T777852.PER_NAME_MONTH,
+    T757366.X_MOT_ACCOUNT_CLASS,
+    --
+    --
+     (
+        CASE
+           WHEN T750045.ACCOUNT_SEG1_CODE IS NULL
+           THEN T854409.ACCOUNT_SEG1_CODE
+           ELSE T750045.ACCOUNT_SEG1_CODE
+        END,
+        CASE
+           WHEN T854409.ACCOUNT_SEG1_CODE IS NULL
+           THEN T750045.ACCOUNT_SEG1_CODE
+           ELSE T854409.ACCOUNT_SEG1_CODE
+        END
+    ),
+    --
+    CASE
+        WHEN T750045.ACCOUNT_SEG2_CODE IS NULL
+        THEN T854409.ACCOUNT_SEG2_CODE
+        ELSE T750045.ACCOUNT_SEG2_CODE
+    END,
+    --
+    NVL (
+        CASE
+           WHEN T750045.ACCOUNT_SEG3_CODE IS NULL
+           THEN
+              CASE
+                 WHEN T757366.X_MOT_ACCOUNT_CLASS IN ('DNAREPT', 'DNARSRV')
+                 THEN '410000'
+                 ELSE '400000'
+              END
+           ELSE T750045.ACCOUNT_SEG3_CODE
+        END,
+       '400000'
+    ),
+    --
+    CASE
+        WHEN T750045.ACCOUNT_SEG4_CODE IS NULL
+        THEN T854409.ACCOUNT_SEG4_CODE
+        ELSE T750045.ACCOUNT_SEG4_CODE
+    END,
+    --
+    CASE
+        WHEN T750045.ACCOUNT_SEG5_CODE IS NULL
+        THEN T854409.ACCOUNT_SEG5_CODE
+        ELSE T750045.ACCOUNT_SEG5_CODE
+    END,
+    --
+    CASE
+        WHEN T750045.ACCOUNT_SEG6_CODE IS NULL
+        THEN T854409.ACCOUNT_SEG6_CODE
+        ELSE T750045.ACCOUNT_SEG6_CODE
+    END,
+    --
+    NVL (
+        CASE
+           WHEN T750045.ACCOUNT_SEG7_CODE IS NULL
+           THEN T854409.ACCOUNT_SEG7_CODE
+           ELSE T750045.ACCOUNT_SEG7_CODE
+        END,
+        CASE
+           WHEN T854409.ACCOUNT_SEG7_CODE IS NULL
+           THEN T750045.ACCOUNT_SEG7_CODE
+           ELSE T854409.ACCOUNT_SEG7_CODE
+        END
+    ),
+    --
+    NVL (T734763.NAME, 'ALL_OTHER_CUSTOMERS'),
+    NVL (T734763.ACCOUNT_NUM, 'ALL_OTHER_CUSTOMERS'),
+    --
+    T1139625.PROD_HIER_APC_CODE,
+        T1139625.PROD_LINE,
+        T1139625.PROD_FAMILY,
+        T1139625.PROD_TECHNOLOGY,
+         T1139625.PROD_HIER_SBU,
+    --
+    NVL (
+        CASE
+            WHEN T750045.ACCOUNT_SEG7_CODE IS NULL
+            THEN T854409.ACCOUNT_SEG7_CODE
+            ELSE T750045.ACCOUNT_SEG7_CODE
+        END,
+        CASE
+            WHEN T854409.ACCOUNT_SEG7_CODE IS NULL
+            THEN T750045.ACCOUNT_SEG7_CODE
+            ELSE T854409.ACCOUNT_SEG7_CODE
+        END
+    ) ||'-'||NVL (T734763.ACCOUNT_NUM, 'ALL_OTHER_CUSTOMERS') ||'-'|| T757366.x_arrs_dna_period
+     --order by  T777852.PER_NAME_MONTH
+                ,T777852.ENT_PERIOD_END_DT ) /* JD:  Leverage period end date already captured in W_DAY_D dimension table */]]></Field>
+</Object>
+<Object class="com.sunopsis.dwg.dbobj.SnpOrigTxt">
+		<Field name="GlobalId" type="java.lang.String">null</Field>
+	<Field name="ITxtOrig" type="com.sunopsis.sql.DbInt"><![CDATA[128]]></Field>
+	<Field name="OrigineName" type="java.lang.String"><![CDATA[Variable Query]]></Field>
+	<Field name="SnpsCol" type="java.lang.String"><![CDATA[I_TXT_VAR_IN]]></Field>
+	<Field name="SnpsTable" type="java.lang.String"><![CDATA[SNP_VAR]]></Field>
+</Object>
+<Object class="com.sunopsis.dwg.dbobj.SnpFKXRef">
+		<Field name="RefKey" type="java.lang.String"><![CDATA[SNP_PROJECT.6]]></Field>
+	<Field name="RefObjGlobalId" type="java.lang.String"><![CDATA[adec3252-c826-40a8-8adc-aa8cf1bee5cf]]></Field>
+ <Field name="RefObjFQName" type="java.lang.String"><![CDATA[INFA2PaaS]]></Field>
+ <Field name="RefObjFQType" type="java.lang.String"><![CDATA[SNP_PROJECT]]></Field>
+ <Field name="RefObjFQNameLengths" type="java.lang.String"><![CDATA[9]]></Field>
+</Object>
+<Object class="com.sunopsis.dwg.dbobj.SnpFKXRef">
+		<Field name="RefKey" type="java.lang.String"><![CDATA[SNP_TXTHEADER.4602]]></Field>
+	<Field name="RefObjGlobalId" type="java.lang.String"><![CDATA[ed74ad7a-b067-47ed-b9dd-70ad416e52f6]]></Field>
+ <Field name="RefObjFQName" type="java.lang.String">null</Field>
+ <Field name="RefObjFQType" type="java.lang.String">null</Field>
+ <Field name="RefObjFQNameLengths" type="java.lang.String">null</Field>
+</Object>
+<Object class="com.sunopsis.dwg.DwgExportSummary">
+		<Field name="ExpTxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="InstObjNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="JoinColNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="JoinNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="KeyColNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="KeyNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="LinkDiagNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="MorigTxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="MtxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="OrigTxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[1]]></Field>
+	<Field name="OtherObjectsNb" type="com.sunopsis.sql.DbInt"><![CDATA[1]]></Field>
+	<Field name="PlanAgentNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="StepNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="TxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[1]]></Field>
+	<Field name="UeOrigNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="UeUsedNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="VarPlanAgentNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="ScenTxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="OdiVersion" type="java.lang.String"><![CDATA[12.2.1]]></Field>
+	<Field name="OriginRepositoryID" type="com.sunopsis.sql.DbInt"><![CDATA[1]]></Field>
+	<Field name="RepositoryVersion" type="java.lang.String"><![CDATA[05.02.02.05]]></Field>
+</Object>
+</SunopsisExport>

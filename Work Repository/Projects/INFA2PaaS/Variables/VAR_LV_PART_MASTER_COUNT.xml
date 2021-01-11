@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SunopsisExport>
+<Admin RepositoryVersion="05.02.02.05" IsLegacyIdCompatible="false" />
+<Encryption algorithm="AES" keyLength="128" exportKeyHash="" keyVect="PJLNlvsBUF9DhfzFdlUYQw==" exportKeySalt="afac0efe-c0c3-4699-87de-eeaa8eabe829" containsCipherText="false"/>
+<Object class="com.sunopsis.dwg.dbobj.SnpVar">
+		<Field name="DefDate" type="java.sql.Timestamp">null</Field>
+	<Field name="DefN" type="com.sunopsis.sql.DbInt">null</Field>
+	<Field name="DefV" type="java.lang.String">null</Field>
+	<Field name="ExtVersion" type="java.lang.String">null</Field>
+	<Field name="FirstDate" type="java.sql.Timestamp"><![CDATA[2020-07-10 20:24:08.0]]></Field>
+	<Field name="FirstUser" type="java.lang.String"><![CDATA[SUPERVISOR]]></Field>
+	<Field name="GlobalId" type="java.lang.String"><![CDATA[ab7df31d-15e9-4072-82de-cba3d9377ef1]]></Field>
+	<Field name="IndChange" type="java.lang.String"><![CDATA[I]]></Field>
+	<Field name="IndStore" type="java.lang.String"><![CDATA[L]]></Field>
+	<Field name="IntVersion" type="com.sunopsis.sql.DbInt"><![CDATA[1]]></Field>
+	<Field name="IProject" type="com.sunopsis.sql.DbInt"><![CDATA[6]]></Field>
+	<Field name="ITxtVar" type="com.sunopsis.sql.DbInt"><![CDATA[null]]></Field>
+	<Field name="ITxtVarIn" type="com.sunopsis.sql.DbInt"><![CDATA[4601]]></Field>
+	<Field name="ITxtVarValTxt" type="com.sunopsis.sql.DbInt"><![CDATA[null]]></Field>
+	<Field name="IVar" type="com.sunopsis.sql.DbInt"><![CDATA[86]]></Field>
+	<Field name="LastDate" type="java.sql.Timestamp"><![CDATA[2020-07-10 20:24:08.0]]></Field>
+	<Field name="LastUser" type="java.lang.String"><![CDATA[SUPERVISOR]]></Field>
+	<Field name="LschemaName" type="java.lang.String"><![CDATA[INFA2Paas_EBSSCM_LS]]></Field>
+	<Field name="VarDatatype" type="java.lang.String"><![CDATA[A]]></Field>
+	<Field name="VarName" type="java.lang.String"><![CDATA[LV_PART_MASTER_COUNT]]></Field>
+	<Field name="VarType" type="java.lang.String"><![CDATA[P]]></Field>
+	<Field name="VLastDate" type="java.sql.Timestamp">null</Field>
+</Object>
+<Object class="com.sunopsis.dwg.dbobj.SnpTxtHeader">
+		<Field name="Enc" type="java.lang.String">null</Field>
+	<Field name="EncKey" type="java.lang.String">null</Field>
+ <Field name="EncKeyVect" type="java.lang.String">null</Field>
+	<Field name="GlobalId" type="java.lang.String"><![CDATA[d9818199-5e8e-433e-823d-f693169fa003]]></Field>
+	<Field name="ITxt" type="com.sunopsis.sql.DbInt"><![CDATA[4601]]></Field>
+	<Field name="ITxtOrig" type="com.sunopsis.sql.DbInt"><![CDATA[128]]></Field>
+	<Field name="SqlIndGrp" type="java.lang.String"><![CDATA[2]]></Field>
+ <Field name="Txt" type="java.lang.String"><![CDATA[select count(*) as NO_OF_ROWS,new_time(sysdate, 'edt','gmt')as LOAD_TIME
+   from(
+Select msi.segment1 Part_Number,
+                    msi.description,
+                    msi.organization_id,
+                    msi.inventory_item_status_code status,
+                    flvv.meaning item_type,
+                    
+                    nvl(hier.apc,'unas') APC,
+                    nvl(hier.class,'unas') Class,
+                    nvl(hier.line,'unas') Line,
+                    nvl(hier.family,'unas') Family,
+                    nvl(hier.technology,'unas') Technology,
+                    nvl(hier.sbu,'unas') SBU,
+                    'false' "ACTIVE", 'false' "integration_in_scope"
+                                            
+                     from apps.mtl_system_items_b msi, oc.mot_chs_sf_itm_his his, apps.c_fnd_lookups_v flvv,
+                     (SELECT mc.segment1 apc,
+                        mc.segment2 class,
+                        mc.segment3 line,
+                        mc.segment4 family,
+                        mc.segment5 technology,
+                        mc.segment6 sbu,
+                        ffv.description apc_desc,
+                        mic.organization_id, mic.inventory_item_id
+                   FROM apps.mtl_category_sets   mcs,
+                        apps.mtl_item_categories mic,
+                        apps.mtl_categories      mc,
+                        apps.fnd_flex_values_vl  ffv
+                  WHERE mcs.category_set_name = 'PROD HIER'
+                    AND mic.category_set_id = mcs.category_set_id
+                    AND mc.category_id = mic.category_id
+                    AND ffv.flex_value = mc.segment1
+                    AND ffv.flex_value_set_id = 1007712) hier
+                     
+where 1=1 
+and msi.organization_id = 102
+AND msi.inventory_item_id = HIS.INVENTORY_ITEM_ID
+AND msi.item_type = flvv.lookup_code
+AND flvv.lookup_type in ( 'ITEM_TYPE')
+AND hier.inventory_item_id(+) = msi.inventory_item_id
+AND hier.organization_id(+)=msi.organization_id
+AND msi.inventory_item_id not in (
+SELECT  
+                    msi.inventory_item_id
+             FROM   apps.mtl_system_items_b msi,
+                    apps.c_fnd_lookups_v flvv,
+                    apps.c_fnd_lookups_v flvv1
+                    ,apps.c_fnd_lookups_v CFV_ITEM_STATUS
+                    ,apps.c_fnd_lookups_v cfv_item_type
+            WHERE   1=1
+              AND   flvv1.lookup_type       = 'C_SF_ORG_ITEM'
+              AND   msi.organization_id     = flvv1.description
+              AND   msi.organization_id IN ( SELECT  to_number(flv.description)
+                                               FROM  apps.c_fnd_lookups_v flv
+                                              WHERE  flv.lookup_type      = 'C_SF_ORG_ITEM'
+                                            )
+                    AND inventory_item_status_code          = cfv_item_status.attribute1
+                    and cfv_item_status.lookup_type         = 'C_SF_ITMPR_PKG_VALUES'
+                    AND cfv_item_status.attribute_category  = 'C_SF_ITEM_STATUS'
+                    AND msi.item_type                       = cfv_item_type.attribute1
+                    and cfv_item_type.lookup_type           ='C_SF_ITMPR_PKG_VALUES'
+                    AND cfv_item_type.attribute_category    ='C_SF_ITEM_TYPES'
+                    AND NVL (msi.default_shipping_org, 0)  != 236
+                    AND msi.item_type                       = flvv.lookup_code
+                    AND flvv.lookup_type                    = 'ITEM_TYPE'
+                ) 
+                order by msi.segment1
+)]]></Field>
+</Object>
+<Object class="com.sunopsis.dwg.dbobj.SnpOrigTxt">
+		<Field name="GlobalId" type="java.lang.String">null</Field>
+	<Field name="ITxtOrig" type="com.sunopsis.sql.DbInt"><![CDATA[128]]></Field>
+	<Field name="OrigineName" type="java.lang.String"><![CDATA[Variable Query]]></Field>
+	<Field name="SnpsCol" type="java.lang.String"><![CDATA[I_TXT_VAR_IN]]></Field>
+	<Field name="SnpsTable" type="java.lang.String"><![CDATA[SNP_VAR]]></Field>
+</Object>
+<Object class="com.sunopsis.dwg.dbobj.SnpFKXRef">
+		<Field name="RefKey" type="java.lang.String"><![CDATA[SNP_PROJECT.6]]></Field>
+	<Field name="RefObjGlobalId" type="java.lang.String"><![CDATA[adec3252-c826-40a8-8adc-aa8cf1bee5cf]]></Field>
+ <Field name="RefObjFQName" type="java.lang.String"><![CDATA[INFA2PaaS]]></Field>
+ <Field name="RefObjFQType" type="java.lang.String"><![CDATA[SNP_PROJECT]]></Field>
+ <Field name="RefObjFQNameLengths" type="java.lang.String"><![CDATA[9]]></Field>
+</Object>
+<Object class="com.sunopsis.dwg.dbobj.SnpFKXRef">
+		<Field name="RefKey" type="java.lang.String"><![CDATA[SNP_TXTHEADER.4601]]></Field>
+	<Field name="RefObjGlobalId" type="java.lang.String"><![CDATA[d9818199-5e8e-433e-823d-f693169fa003]]></Field>
+ <Field name="RefObjFQName" type="java.lang.String">null</Field>
+ <Field name="RefObjFQType" type="java.lang.String">null</Field>
+ <Field name="RefObjFQNameLengths" type="java.lang.String">null</Field>
+</Object>
+<Object class="com.sunopsis.dwg.DwgExportSummary">
+		<Field name="ExpTxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="InstObjNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="JoinColNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="JoinNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="KeyColNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="KeyNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="LinkDiagNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="MorigTxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="MtxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="OrigTxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[1]]></Field>
+	<Field name="OtherObjectsNb" type="com.sunopsis.sql.DbInt"><![CDATA[1]]></Field>
+	<Field name="PlanAgentNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="StepNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="TxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[1]]></Field>
+	<Field name="UeOrigNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="UeUsedNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="VarPlanAgentNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="ScenTxtNb" type="com.sunopsis.sql.DbInt"><![CDATA[0]]></Field>
+	<Field name="OdiVersion" type="java.lang.String"><![CDATA[12.2.1]]></Field>
+	<Field name="OriginRepositoryID" type="com.sunopsis.sql.DbInt"><![CDATA[1]]></Field>
+	<Field name="RepositoryVersion" type="java.lang.String"><![CDATA[05.02.02.05]]></Field>
+</Object>
+</SunopsisExport>
